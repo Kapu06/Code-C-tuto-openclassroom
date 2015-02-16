@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1424037179 source:/home/kapu/Bureau/Programmation_nouvel_essai/Programme_4_openclassroom/Pendu/main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	"jeu.h"
+
+1424034111 /home/kapu/Bureau/Programmation_nouvel_essai/Programme_4_openclassroom/Pendu/jeu.h
+
