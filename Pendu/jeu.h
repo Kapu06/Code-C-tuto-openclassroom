@@ -8,7 +8,7 @@ char lirecaractere()
     caractere = getchar();//Lit le premier caractère
     caractere = toupper(caractere);
 
-    while(getchar() != "\n");
+    while(getchar() != '\n');
 
     return caractere;
 }
