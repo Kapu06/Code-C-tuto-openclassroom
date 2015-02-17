@@ -3,22 +3,48 @@
 #include <ctype.h>
 #include <string.h>
 #include "jeu.h"
-#define TAILLE_MAX 100
 
 /* Se servir de motCache.txt pour y stocker les asterix -> les afficher et y modifier dedans le mot trouvé au fur et à mesure */
+/*Ecrit bien dans le fichier mais, rajoute un + à la fin; vider le fichier au
+début du programme!!; pb d'affichage nombre de coups et caractère saisi, réglé
+si retire la boucle for, mais pose pb de motCache=******  IDée: extérioriser cette
+boucle dans une fonction dans le header!!!!!*/
 
 int main()
 {
-    int coupsRestant=10, longeurChaine=0, i=0, compteurCoups=0;
-    char maLettre = 0, motSecret[]="MARRON", motCache[]="", *pointeurRecherche = NULL;
+    int coupsRestant=10, i=0, compteurCoups=0, longeurChaine=0;
+    char maLettre = 0, motSecret[]="MARRON",motCache[]="", *pointeurRecherche = NULL;
 
-//Calcul du nombre d'asterix à afficher
-longeurChaine=strlen(motSecret);
-/*for (i=0;i<=longeurChaine;i++)
+    FILE* fichierMotCache = NULL;
+    fichierMotCache = fopen("motCache.txt","r+");
+
+longeurChaine=strlen(motSecret);//calcul longeur nécessaire pour taille motCache
+
+*motCache = malloc(longeurChaine * sizeof(char));//allocation dynamique mémoire
+if (motCache == NULL)
 {
-    motCache[i]="*";
-} */  //Faire une allocation dynamique de la taille du tableau
- /*motCache=malloc(longeurChaine * sizeof(char)); échec d'allocation dynamique */
+    exit(0);//arrêt du programme si échec allocation mémoire
+}
+
+for (i=0;i<=longeurChaine;i++)//Calcul du nombre d'asterix à afficher: bug!
+
+{
+    motCache[i]='*';
+}
+
+    if (fichierMotCache != NULL)
+ {
+    fprintf(fichierMotCache, "%s", motCache); //Ecriture dans le fichier motCache.txt du motCache (***)
+
+      fclose(fichierMotCache);
+ }
+
+ else
+ {
+     printf("Impossible d'ouvrir le fichier motCache.txt");
+ }
+
+
 
 
 
@@ -48,7 +74,7 @@ while (coupsRestant !=0)
     {
         printf("Bravo!! Vous avez découvert le mot mystère!\n\n");
         printf("%d innocents sont morts par votre faute au cours de cette partie...", compteurCoups);
-        coupsRestant==0; //tentaive d'arrêt du jeu: à voir si fonctionne, mais doute
+        coupsRestant==0; //tentative d'arrêt du jeu: à voir si fonctionne, mais doute
     }
 
 
