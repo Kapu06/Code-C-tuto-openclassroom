@@ -1,5 +1,7 @@
 #ifndef DEF_JEU
 #define DEF_JEU
+#define TAILLE_MAX 26
+
 
 char lirecaractere()
 {
@@ -11,6 +13,16 @@ char lirecaractere()
     while(getchar() != '\n');
 
     return caractere;
+}
+
+void recuperationMotSecret (FILE* fichierMotSecret, char motSecret[])
+{
+    if (fichierMotSecret != NULL)
+    {
+        fgets(motSecret, TAILLE_MAX, fichierMotSecret);
+        fclose(fichierMotSecret);
+    }
+    return 0;
 }
 
 void masquageMotCahe(char pointeurMotSecret[],char pointeurMotCache[])
@@ -32,6 +44,7 @@ else
     pointeurMotCache[i]='*';
 }
 }
+
 }
 
 void verificationOuvertureFichier (FILE* fichierMotCache, char motCache[])
@@ -47,8 +60,17 @@ void verificationOuvertureFichier (FILE* fichierMotCache, char motCache[])
  {
      printf("Impossible d'ouvrir le fichier motCache.txt");
  }
+
 }
 
+void incrementageCoups (int *pointeurCoupsRestants, int *pointeurCompteurCoups)
+{
+
+*pointeurCoupsRestants --;
+
+*pointeurCompteurCoups ++;
+
+}
 
 
 #endif // DEF_JEU

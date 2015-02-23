@@ -3,20 +3,24 @@
 #include <ctype.h>
 #include <string.h>
 #include "jeu.h"
+#define TAILLE_MAX 26
 
-/* Se servir de motCache.txt pour y stocker les asterix -> les afficher et y modifier dedans le mot trouvé au fur et à mesure */
-/*Ecrit bien dans le fichier mais, rajoute un + à la fin; vider le fichier au
-début du programme!!; pb d'affichage nombre de coups et caractère saisi, réglé
+/* Se servir de motCache.txt pour y modifier dedans le mot trouvé au fur et à mesure */
+/*vider le fichier au début du programme!!; pb d'affichage nombre de coups et caractère saisi, réglé
 si enlève le '*' à ligne 22 du pointeur, mais pose pb de motCache=****** */
+/*Se sert de dictionnaire.txt pour récupérer le mot Secret -> permettra de comparer et remplacer les étoiles/lettres du bon mot selon emplacement curseur*/
 
 int main()
 {
-    int coupsRestant=10,compteurCoups=0;
-    char maLettre = 0, motSecret[]="MARRON",motCache[]="", *pointeurRecherche = NULL;
+    int coupsRestant=10,compteurCoups=0, *pointeurCoupsRestants = NULL, *pointeurCompteurCoups=NULL;
+    char maLettre = 0, motSecret[TAILLE_MAX],motCache[]="", *pointeurRecherche = NULL;
 
     FILE* fichierMotCache = NULL;
+    FILE* fichierMotSecret = NULL;
+    fichierMotSecret = fopen("dictionnaire.txt", "r");
     fichierMotCache = fopen("motCache.txt","r+");
 
+recuperationMotSecret(fichierMotSecret, motSecret);
 masquageMotCahe(motSecret,motCache);
 verificationOuvertureFichier(fichierMotCache, motCache);
 
@@ -32,16 +36,17 @@ while (coupsRestant >0)
 {
 
     printf("\n\nIl vous reste %d coups à jouer\n", coupsRestant);
-    printf("Quel est le mot secret?: %s", motCache);//Bug sur l'affichage des étoiles
+    printf("Quel est le mot secret?: %s", motCache);
     printf("\nPropose une lettre si tu l'oses: ");
     maLettre=lirecaractere();
     pointeurRecherche=strchr(motSecret,maLettre); //Je récupère dans un pointeur l'adresse de la lettre trouvée
     if (pointeurRecherche!=NULL)
     {
+
+
         printf("Voici ce que tu as trouvé: %c", *pointeurRecherche);//Affiche uniquement la/les lettres trouvées
     }
-    coupsRestant--;
-    compteurCoups++;
+incrementageCoups (&coupsRestant, &compteurCoups);
 
 
     if (strcmp(motSecret,motCache)==0)
